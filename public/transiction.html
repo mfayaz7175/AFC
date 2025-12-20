@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AfCoin Transfer</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AfCoin Transfer</h1>
+    <button id="connectWallet">Connect Wallet</button>
+    <p id="walletAddress">Wallet Address: Not Connected</p>
+
+    <h2>Your Balance: <span id="balance">0</span> AFC</h2>
+
+    <h3>Transfer Tokens</h3>
+    <input type="text" id="recipient" placeholder="Recipient Address">
+    <input type="number" id="amount" placeholder="Amount">
+    <button id="transfer">Send Tokens</button>
+    <p id="status"></p>
+
+    <script>
+        const contractAddress = "YOUR_CONTRACT_ADDRESS_HERE"; // Replace with your deployed contract address
+        const abi = [ /* Replace with your contract's ABI */ ];
+
+        let web3, contract, userAccount;
+
+        // Connect to MetaMask
+        document.getElementById("connectWallet").addEventListener("click", async () => {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                const accounts = await web3.eth.getAccounts();
+                userAccount = accounts[0];
+                document.getElementById("walletAddress").textContent = `Wallet Address: ${userAccount}`;
+                initializeContract();
+                getBalance();
+            } else {
+                alert("Please install MetaMask to use this feature.");
+            }
+        });
+
+        // Initialize Contract
+        function initializeContract() {
+            contract = new web3.eth.Contract(abi, contractAddress);
+        }
+
+        // Get User's Balance
+        async function getBalance() {
+            const balance = await contract.methods.balanceOf(userAccount).call();
+            const decimals = await contract.methods.decimals().call();
+            document.getElementById("balance").textContent = (balance / 10 ** decimals).toFixed(2);
+        }
+
+        // Transfer Tokens
+        document.getElementById("transfer").addEventListener("click", async () => {
+            const recipient = document.getElementById("recipient").value;
+            const amount = document.getElementById("amount").value;
+
+            if (!recipient || !amount) {
+                alert("Please enter both recipient address and amount.");
+                return;
+            }
+
+            const decimals = await contract.methods.decimals().call();
+            const amountToSend = amount * 10 ** decimals;
+
+            try {
+                document.getElementById("status").textContent = "Transaction in progress...";
+                await contract.methods.transfer(recipient, amountToSend).send({ from: userAccount });
+                document.getElementById("status").textContent = "Transaction successful!";
+                getBalance();
+            } catch (error) {
+                document.getElementById("status").textContent = `Transaction failed: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

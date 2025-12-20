@@ -1,0 +1,50 @@
+.mint-page-container {
+  max-width: 100%;
+  margin: auto;
+}
+
+.card {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15); /* Transparent white */
+  backdrop-filter: blur(10px); /* Blurred effect */
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+}
+
+.card-title {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  color: #ffffff; /* White text for better contrast */
+}
+
+.btn-primary {
+  font-size: 1rem;
+  font-weight: bold;
+  background: rgba(0, 123, 255, 0.7); /* Transparent blue */
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: rgba(0, 123, 255, 1);
+}
+
+.alert {
+  font-size: 0.9rem;
+  text-align: center;
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  color: white;
+}
+
+.topic {
+  font-weight: bold;
+  color: white;
+}

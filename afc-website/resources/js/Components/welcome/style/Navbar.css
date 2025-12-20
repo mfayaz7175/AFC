@@ -1,0 +1,150 @@
+/* 🖥️ Sidebar for larger screens */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 5%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    columns: rgb(0, 0, 0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+.sidebar.hovered {
+    width: 15%;
+}
+
+/* Sidebar Content */
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Menu Items */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 20px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+}
+
+.menu-item i {
+    font-size: 24px;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.menu-text {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+}
+
+.sidebar.hovered .menu-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.menu-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #00fcac;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(5px);
+    color: #00fcac;
+}
+
+.sidebar.hovered .menu-item:hover i {
+    transform: rotate(20deg);
+}
+
+/* 📱 Mobile Navbar */
+.mobile-navbar {
+    display: none;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.141);
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    z-index: 1001;
+    transition: background 0.3s ease;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-button:hover {
+    transform: scale(1.1);
+}
+
+/* Offcanvas Menu */
+.offcanvas {
+    background: rgba(255, 255, 255, 0.355) !important;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Offcanvas Header */
+.offcanvas-header {
+    background: rgba(255, 255, 255, 0.187);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Offcanvas Body */
+.offcanvas-body {
+    padding: 20px;
+}
+
+/* Mobile Menu Items */
+.mobile-menu-item {
+    font-size: 18px;
+    padding: 12px;
+    color: rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.mobile-menu-item:hover,
+.mobile-menu-item.active {
+    background: rgba(0, 252, 172, 0.566);
+    color: black;
+}
+
+/* 📌 Hide sidebar & show navbar on small screens */
+@media (max-width: 991px) {
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-navbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}

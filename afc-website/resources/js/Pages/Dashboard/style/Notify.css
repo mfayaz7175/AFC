@@ -1,0 +1,56 @@
+/* .ql-toolbar {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border-color: #e2e8f0 !important;
+  }
+
+  .ql-container {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border-color: #e2e8f0 !important;
+    min-height: 200px;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  } */
+
+
+
+  .dark-modal .modal-content {
+    background-color: #1a202c;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+  }
+
+  .dark-modal .modal-header {
+    border-bottom: none;
+  }
+
+  .dark-modal .close {
+    color: #fff;
+    opacity: 0.75;
+  }
+
+  .dark-modal .close:hover {
+    color: #fff;
+    opacity: 1;
+  }
+
+  .edit-btn {
+    background: rgba(99, 102, 241, 0.1);
+    border: none;
+    color: #6366f1;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .edit-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+  }

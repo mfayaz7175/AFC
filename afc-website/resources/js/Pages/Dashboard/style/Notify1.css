@@ -1,0 +1,141 @@
+General Styles
+.notify-page {
+    min-height: 100vh;
+    /* padding: 20px; */
+}
+
+.settings-sidebar {
+    background: #ffffff;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.notify-content {
+    padding: 20px;
+}
+
+.page-title, .history-title {
+    font-size: 25px;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Notification Form */
+.notify-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.2);
+}
+
+/* Buttons */
+.send-btn, .btn-danger {
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.send-btn {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.send-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #003d82);
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background: #e74c3c;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+/* Table */
+.notification-table {
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.notification-table th {
+    background: #007bff;
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.notification-table td {
+    padding: 12px;
+    text-align: center;
+    color: #333;
+}
+
+.notification-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .notify-content {
+        padding: 15px;
+    }
+    .send-btn {
+        width: 100%;
+    }
+    .notification-table th, .notification-table td {
+        font-size: 14px;
+    }
+}
+
+/* Mobile-Friendly Table */
+@media (max-width: 576px) {
+    .notification-table thead {
+        display: none;
+    }
+    .notification-table tbody tr {
+        display: block;
+        margin-bottom: 10px;
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .notification-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 12px;
+    }
+    .notification-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #555;
+    }
+    .btn-danger {
+        width: 100%;
+    }
+}

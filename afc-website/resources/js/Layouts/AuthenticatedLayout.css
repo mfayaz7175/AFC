@@ -1,0 +1,415 @@
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body, #root {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    position: relative;
+    z-index: 1;
+    overflow-x: hidden;
+  }
+
+  /* Background Blur Image for the Body */
+  body {
+    position: relative; /* Ensures the pseudo-element stays within the body */
+    min-height: 100vh; /* Ensures full coverage */
+    margin: 0; /* Removes default margin */
+    overflow-x: hidden; /* Prevents horizontal scroll due to blur edges */
+}
+
+body::after {
+    content: "";
+    position: fixed; /* Covers the whole viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('img/bg5.JPG') center/cover no-repeat;
+    filter: blur(3px);
+    z-index: -1; /* Places it behind the content */
+}
+
+  /* Dashboard Layout */
+  .dashboard-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar main";
+    height: 100%;
+    width: 100%;
+
+  }
+
+  /* Header */
+  .dashboard-header {
+    position: sticky;
+    top: 0;
+    grid-area: header;
+    background: linear-gradient(135deg, #1e1e2f, #27293d);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 60px;
+    z-index: 100;
+
+  }
+
+  /* Header Left: Sidebar Toggle & Logo */
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-toggle {
+    background: none;
+    color: #fff;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none; /* Hidden on large screens */
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-left: 10px;
+  }
+
+  /* Header Actions */
+  .header-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-actions input {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 20px;
+    margin-right: 20px;
+    outline: none;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .header-actions input:focus {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+  }
+
+  .header-actions .user-profile {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  /* Notification & Message Boxes */
+  .header-notifications {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+  }
+
+  .notification,
+  .message {
+    position: relative;
+    margin: 0 8px;
+    cursor: pointer;
+  }
+
+  .notification-icon,
+  .message-icon {
+    font-size: 1.8rem;
+  }
+
+  .notification-badge,
+  .message-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: #fff;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    padding: 2px 5px;
+  }
+
+  /* Sidebar */
+  .dashboard-sidebar {
+    grid-area: sidebar;
+    position: sticky;
+    top: 30px;
+    z-index: 90;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(46,46,62,0.95), rgba(46,46,62,0.85));
+    color: #fff;
+    padding: 30px 20px;
+    border-radius: 10px;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+    overflow-y: auto;
+  }
+
+  /* Sidebar Background with a subtle overlay */
+  .dashboard-sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('img/sight.jpg') center/cover no-repeat;
+    filter: blur(6px);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 10px;
+  }
+
+  .dashboard-sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dashboard-sidebar nav ul li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    border-radius: 5px;
+    padding: 8px 10px;
+  }
+
+  /* Sidebar Link Styles */
+  .dashboard-sidebar nav ul li a {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hover Effects for Sidebar Items */
+  .dashboard-sidebar nav ul li:hover {
+    background: rgba(0, 0, 0, 0.266);
+    transform: translateX(5px);
+  }
+
+  .nav-icon {
+    margin-right: 10px;
+    font-size: 1.4rem;
+    width: 1.8rem;
+    text-align: center;
+    color: #befaff;
+  }
+
+  .nav-text {
+    font-size: 1.1rem;
+  }
+
+  /* Close Button on the Right in Sidebar */
+  .close-sidebar {
+    background: none;
+    color: #fff;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: none; /* Only visible on small screens */
+  }
+
+  /* Main Content */
+  .dashboard-main {
+    grid-area: main;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: rgba(247,248,250,0.95);
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: calc(100% - 40px);
+  }
+
+  /* Dashboard Grid for Cards or Similar Content */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 20px;
+  }
+
+  /* Cards with Entrance Animation */
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideIn 0.6s ease-out forwards;
+    animation-delay: var(--animation-delay, 0s);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-header h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .card-content {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  /* Keyframes for slide-in animation */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Chart & Analytics Components */
+  .chart-placeholder {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9ecef;
+    border-radius: 8px;
+    color: #777;
+    font-size: 1.4rem;
+  }
+
+  .analytics-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .analytics-panel .metric {
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+  }
+
+  .analytics-panel .metric h4 {
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 5px;
+  }
+
+  .analytics-panel .metric p {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+  }
+
+  /* Activity Feed */
+  .activity-feed ul {
+    list-style: none;
+  }
+
+  .activity-feed ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    color: #555;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .logo {
+        display: none;
+      }
+    .dashboard-container {
+      grid-template-columns: 100%;
+      grid-template-areas:
+        "header"
+        "main";
+      width: 100%;
+    }
+
+    .dashboard-header {
+      padding: 0 10px;
+      font-size: 0.9rem; /* Slightly reduce font-size for header elements */
+    }
+
+    .sidebar-toggle {
+      display: block; /* Show toggle only on small devices */
+    }
+
+    /* Off-canvas Sidebar */
+    .dashboard-sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      margin: 0;
+      border-radius: 0;
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .dashboard-sidebar.open {
+      transform: translateX(0);
+      left: 0;
+    }
+
+    .close-sidebar {
+      display: block;
+    }
+
+    /* Adjust main content to fit the viewport without horizontal scrolling */
+    .dashboard-main {
+      margin: 0 10px 10px;
+      padding: 15px;
+      border-radius: 4px;
+      width: calc(100% - 20px);
+    }
+
+    /* Scale down logo text on small devices */
+    .logo {
+      font-size: 1.6rem;
+    }
+
+    /* Adjust header actions and notifications */
+    .header-actions input {
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      margin-right: 10px;
+    }
+
+    .header-actions .user-profile {
+      font-size: 1rem;
+    }
+  }
+
+  /* Extra Responsive Adjustment for Very Small Screens */
+  @media (max-width: 480px) {
+    /* Hide logo text (e.g., "power dashboard") on very small screens */
+    .logo {
+      display: none;
+    }
+  }

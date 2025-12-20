@@ -1,0 +1,223 @@
+/* General Styles */
+.ico-page {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to right, #3c8dbc, #1e88e5);
+    color: white;
+    padding: 100px 20px 150px; /* Adjusted padding for better spacing */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button {
+    background-color: #ffcc00;
+    border: none;
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+    background-color: #e6b800;
+}
+/* ICO Details - Cards (Overlapping Effect) */
+.ico-details {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    position: absolute;
+    top: 60%; /* Overlaps hero section by 20% */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    z-index: 2;
+    flex-wrap: nowrap; /* Ensures all cards stay in one row */
+}
+
+.detail-card {
+    text-align: center;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    width: 35%;
+    min-width: 280px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+
+.detail-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+.detail-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #1e88e5;
+}
+
+/* Progress Section */
+.progress-section {
+    padding-top: 80px;
+    margin: 120px 0 50px;
+    text-align: center;
+}
+
+.progress-section h2 {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.progress-bar {
+    height: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Token Allocation */
+.token-allocation-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 80px 0;
+}
+
+/* 3D Modern Table Styling */
+.table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+table {
+    width: 95%;
+    max-width: 1000px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+th, td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.3s ease-in-out;
+}
+
+th {
+    background: linear-gradient(to right, #1e88e5, #3c8dbc);
+    color: white;
+    font-weight: bold;
+    border-bottom: 2px solid white;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background: rgba(0, 150, 255, 0.15);
+}
+
+/* Professional Roadmap Section */
+.roadmap-section {
+    background: #fff;
+    padding: 60px 20px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 80px auto;
+    max-width: 90%;
+}
+
+.timeline {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    max-width: 700px;
+    margin: auto;
+}
+
+.timeline:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #1e88e5, #3c8dbc);
+    transform: translateX(-50%);
+}
+
+.timeline li {
+    position: relative;
+    width: 45%;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.timeline li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+.timeline li:nth-child(odd) {
+    left: 0;
+}
+
+.timeline li:nth-child(even) {
+    left: 55%;
+}
+
+.timeline li:before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: #1e88e5;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    left: -25px;
+}
+
+.timeline li:nth-child(even):before {
+    left: auto;
+    right: -25px;
+}
+
+/* Whitepaper Section */
+.whitepaper-section {
+    text-align: center;
+    margin: 50px 0;
+}
+
+.whitepaper-button {
+    background-color: #ffcc00;
+    border: none;
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.whitepaper-button:hover {
+    background-color: #e6b800;
+}

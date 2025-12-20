@@ -1,0 +1,135 @@
+  :root {
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --card-border: rgba(255, 255, 255, 0.3);
+    --card-shadow: rgba(0, 0, 0, 0.2);
+    --hover-shadow: rgba(0, 0, 0, 0.5);
+    --transition-speed: 0.3s;
+  }
+  
+  .afc-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .afc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .afc-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+  
+  .afc-operations-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+    padding: 0;
+    list-style: none;
+    justify-items: center;
+  }
+  
+  .afc-card {
+    position: relative;
+    width: 220px;
+    height: 350px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    background: var(--card-bg);
+    box-shadow: 0 8px 32px 0 var(--card-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  }
+  
+  .afc-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 20px 60px 0 var(--hover-shadow);
+  }
+  
+  .afc-card a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .afc-animation-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .afc-animation-wrapper > * {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  /* Adjusted the bottom offset for better title visibility */
+  .afc-card-title {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    -webkit-text-stroke: 1px #000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+  }
+  
+  @media (max-width: 992px) {
+    .afc-operations-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .afc-card {
+      width: 200px;
+      height: 320px;
+    }
+    .afc-animation-wrapper {
+      width: 80px;
+      height: 80px;
+      margin: 30px auto;
+    }
+    .afc-card-title {
+      font-size: 1.5rem;
+      bottom: 30px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .afc-operations-grid {
+      grid-template-columns: 1fr;
+    }
+    .afc-card {
+      width: 180px;
+      height: 300px;
+    }
+    .afc-animation-wrapper {
+      width: 70px;
+      height: 70px;
+      margin: 20px auto;
+    }
+    .afc-card-title {
+      font-size: 1.3rem;
+      bottom: 20px;
+    }
+  }
+  

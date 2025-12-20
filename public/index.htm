@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Ethereum</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <h1>Send Ethereum</h1>
+
+    <label for="senderAccount">Sender Address:</label>
+    <input type="text" id="senderAccount" placeholder="Sender Address"><br><br>
+
+    <label for="receiverAccount">Receiver Address:</label>
+    <input type="text" id="receiverAccount" placeholder="Receiver Address"><br><br>
+
+    <label for="amount">Amount (ETH):</label>
+    <input type="text" id="amount" placeholder="Amount to send"><br><br>
+
+    <label for="privateKey">Private Key:</label>
+    <input type="text" id="privateKey" placeholder="Enter Private Key"><br><br>
+
+    <button id="sendTransactionBtn">Send Transaction</button>
+
+    <h2>Transaction Status</h2>
+    <p id="transactionStatus"></p>
+
+    <script>
+        async function sendEth(fromAddress, toAddress, amount) {
+            try {
+                const provider = new ethers.JsonRpcProvider("HTTP://127.0.0.1:7545");
+
+                // Get private key from input and trim any extra spaces
+                const privateKey = document.getElementById('privateKey').value.trim();
+
+                if (!ethers.isHexString(privateKey) || privateKey.length !== 66) {
+                    throw new Error("Invalid private key format.");
+                }
+
+                // Create wallet using private key and provider
+                const wallet = new ethers.Wallet(privateKey, provider);
+
+                const senderBalanceBefore = await provider.getBalance(fromAddress);
+                const receiverBalanceBefore = await provider.getBalance(toAddress);
+
+                // Update UI with sender's and receiver's balance before transaction
+                document.getElementById('transactionStatus').innerText = 
+                    `Sender balance before: ${ethers.formatEther(senderBalanceBefore)} ETH\n` +
+                    `Receiver balance before: ${ethers.formatEther(receiverBalanceBefore)} ETH`;
+
+                const tx = {
+                    to: toAddress,
+                    value: ethers.parseUnits(amount, 'ether'),
+                };
+
+                const transactionResponse = await wallet.sendTransaction(tx);
+                const receipt = await transactionResponse.wait();
+
+                const senderBalanceAfter = await provider.getBalance(fromAddress);
+                const receiverBalanceAfter = await provider.getBalance(toAddress);
+
+                // Update UI with transaction status and balance after the transaction
+                document.getElementById('transactionStatus').innerText = 
+                    `Transaction sent! Hash: ${transactionResponse.hash}\n` +
+                    `Sender balance after: ${ethers.formatEther(senderBalanceAfter)} ETH\n` +
+                    `Receiver balance after: ${ethers.formatEther(receiverBalanceAfter)} ETH`;
+
+                console.log("Transaction receipt:", receipt);
+            } catch (error) {
+                console.error("Error sending transaction:", error);
+                document.getElementById('transactionStatus').innerText = 
+                    "Error sending transaction. Check the console for details.";
+            }
+        }
+
+        document.getElementById('sendTransactionBtn').onclick = async function() {
+            const fromAddress = document.getElementById('senderAccount').value;
+            const toAddress = document.getElementById('receiverAccount').value;
+            const amount = document.getElementById('amount').value;
+
+            if (!fromAddress || !toAddress || !amount || !document.getElementById('privateKey').value) {
+                document.getElementById('transactionStatus').innerText = "Please fill all fields!";
+                return;
+            }
+
+            await sendEth(fromAddress, toAddress, amount);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send ETH</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <h1>Send Ethereum</h1>
+
+    <label for="privateKey">Private Key:</label>
+    <input type="text" id="privateKey" placeholder="Sender Private Key" oninput="updateSenderAddress()"><br><br>
+
+    <label for="senderAccount">Sender Address:</label>
+    <input type="text" id="senderAccount" placeholder="Sender Address" readonly><br><br>
+
+    <label for="receiverAccount">Receiver Address:</label>
+    <input type="text" id="receiverAccount" placeholder="Receiver Address"><br><br>
+
+    <label for="amount">Amount (ETH):</label>
+    <input type="text" id="amount" placeholder="Amount to send"><br><br>
+
+    <button id="sendTransactionBtn">Send Transaction</button>
+
+    <h2>Transaction Status</h2>
+    <p id="transactionStatus"></p>
+
+    <script>
+        function updateSenderAddress() {
+            const privateKey = document.getElementById('privateKey').value;
+            if (privateKey) {
+                try {
+                    const wallet = new ethers.Wallet(privateKey);
+                    document.getElementById('senderAccount').value = wallet.address;
+                } catch (error) {
+                    console.error("Invalid private key");
+                }
+            } else {
+                document.getElementById('senderAccount').value = '';
+            }
+        }
+
+        async function sendEth(fromAddress, toAddress, amount, privateKey) {
+            try {
+                const provider = new ethers.JsonRpcProvider("http://localhost:8545");
+
+                // Use the private key to create the wallet
+                const wallet = new ethers.Wallet(privateKey, provider);
+
+                const senderBalanceBefore = await provider.getBalance(fromAddress);
+                const receiverBalanceBefore = await provider.getBalance(toAddress);
+
+                // Update UI with sender's and receiver's balance before transaction
+                document.getElementById('transactionStatus').innerText = 
+                    `Sender balance before: ${ethers.formatEther(senderBalanceBefore)} ETH\n` +
+                    `Receiver balance before: ${ethers.formatEther(receiverBalanceBefore)} ETH`;
+
+                const tx = {
+                    to: toAddress,
+                    value: ethers.parseUnits(amount, 'ether'),
+                };
+
+                const transactionResponse = await wallet.sendTransaction(tx);
+                const receipt = await transactionResponse.wait();
+
+                const senderBalanceAfter = await provider.getBalance(fromAddress);
+                const receiverBalanceAfter = await provider.getBalance(toAddress);
+
+                // Update UI with transaction status and balance after the transaction
+                document.getElementById('transactionStatus').innerText = 
+                    `Transaction sent! Hash: ${transactionResponse.hash}\n` +
+                    `Sender balance after: ${ethers.formatEther(senderBalanceAfter)} ETH\n` +
+                    `Receiver balance after: ${ethers.formatEther(receiverBalanceAfter)} ETH`;
+
+                console.log("Transaction receipt:", receipt);
+            } catch (error) {
+                console.error("Error sending transaction:", error);
+                document.getElementById('transactionStatus').innerText = 
+                    "Error sending transaction. Check the console for details.";
+            }
+        }
+
+        document.getElementById('sendTransactionBtn').onclick = async function() {
+            const fromAddress = document.getElementById('senderAccount').value;
+            const toAddress = document.getElementById('receiverAccount').value;
+            const amount = document.getElementById('amount').value;
+            const privateKey = document.getElementById('privateKey').value;
+
+            if (!fromAddress || !toAddress || !amount || !privateKey) {
+                document.getElementById('transactionStatus').innerText = "Please fill all fields!";
+                return;
+            }
+
+            await sendEth(fromAddress, toAddress, amount, privateKey);
+        }
+    </script>
+</body>
+</html> -->

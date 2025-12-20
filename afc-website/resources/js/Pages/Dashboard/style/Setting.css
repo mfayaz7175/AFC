@@ -1,0 +1,105 @@
+/* Setting.css */
+
+/* Main Card Styling */
+.settings-page .card {
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(243, 244, 246, 0.9));
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+  }
+
+  /* Card Header Styling */
+  .settings-page .card-header {
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+  }
+
+  /* Navigation Tabs Styling */
+  .settings-tabs-nav .nav-link {
+    color: #4b5563;
+    background-color: transparent;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .settings-tabs-nav .nav-link:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+  }
+
+  .settings-tabs-nav .nav-link.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  /* Icons in Tabs */
+  .settings-tabs-nav .nav-link i {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .settings-tabs-nav .nav-link.active i {
+    color: white;
+  }
+
+  /* Content Area */
+  .settings-content {
+    padding: 1.5rem;
+  }
+
+  /* Section Headings */
+  .settings-content h6 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* Admin Buttons */
+  .admin-button {
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .admin-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Custom Button Colors */
+  .admin-button.bg-blue-600 {
+    background-color: #2563eb;
+  }
+
+  .admin-button.bg-yellow-500 {
+    background-color: #d97706;
+  }
+
+  .admin-button.bg-green-600 {
+    background-color: #16a34a;
+  }
+
+  .admin-button.bg-red-600 {
+    background-color: #dc2626;
+  }
+
+  .admin-button:hover.bg-blue-700 {
+    background-color: #1d4ed8;
+  }
+
+  .admin-button:hover.bg-yellow-600 {
+    background-color: #b45309;
+  }
+
+  .admin-button:hover.bg-green-700 {
+    background-color: #15803d;
+  }
+
+  .admin-button:hover.bg-red-700 {
+    background-color: #b91c1c;
+  }

@@ -1,0 +1,21 @@
+/* Remove background for this page */
+.fixed.inset-0.bg-white {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: white;
+}
+
+/* Modal backdrop styling */
+.modal-backdrop {
+  background-color: white !important;
+  opacity: 0.95 !important;
+}
+
+/* Card styling override */
+.card.bg-white {
+  background-color: white !important;
+}

@@ -1,0 +1,29 @@
+.coin {
+  position: absolute;
+  right: 20px;           /* Position from the right edge */
+  bottom: 20px;          /* Position from the bottom edge */
+  width: 100px;          /* Coin size */
+  height: 80px;         /* Coin size */
+  background-size: cover; /* Ensure the image fits the coin size */
+  border-radius: 50%;    /* Make the coin round */
+  opacity: 0;            /* Initially invisible */
+  z-index: 10;           /* Ensure coin is above other elements */
+  transform-origin: center; /* Ensure the coin rotates around its center */
+}
+
+/* Hover effect for interactivity */
+.coin:hover {
+  transform: scale(1.1) rotateY(180deg); /* Zoom and rotate the coin on hover */
+}
+
+/* Optional: Light reflection effect */
+.coin::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 10%;
+  background: rgba(255, 255, 255, 0.3); /* Simulate light reflection */
+  border-radius: 50%;
+}

@@ -1,0 +1,119 @@
+/* Container for the powerful cards */
+.powerful-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  /* Card container with perspective for a 3D flip effect */
+  .powerful-card {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    position: relative;
+    background-color: #16a085;
+    margin-top: -20px; /* Slight upward offset */
+  }
+
+  /* The inner wrapper that will flip; rotates about its center */
+  .powerful-card .card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transform-origin: center; /* Flips about the center */
+  }
+
+  /* Flip the card on hover */
+  .powerful-card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  /* Common styles for both front and back faces */
+  .powerful-card .card-front,
+  .powerful-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Front side styles with a vibrant gradient */
+  .powerful-card .card-front {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  /* Member image on the front side */
+  .powerful-card .card-front .member-img {
+    width: 70%;
+    height: 60%;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Text content on the front side */
+  .powerful-card .card-front .card-content {
+    text-align: center;
+  }
+
+  /* Social links on the front side */
+  .powerful-card .card-front .card-social a {
+    margin: 0 0.5rem;
+    color: #fff;
+    font-size: 1.2rem;
+  }
+
+  /* Back side styles with a clean white background */
+  .powerful-card .card-back {
+    background: #fff;
+    color: #333;
+    transform: rotateY(180deg);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Container for member image and meta info arranged in a row */
+  .powerful-card .card-back .member-meta-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Adjust the back side member image to be very small */
+  .powerful-card .card-back .member-img {
+    width: 40px;      /* Small width */
+    height: 40px;     /* Small height to keep it square */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; /* Optional: makes the image circular */
+    margin-right: 0.5rem; /* Space between the image and the name */
+    margin-bottom: 0; /* Ensure no extra bottom margin */
+  }
+
+  /* Back side member meta info (name etc.) */
+  .powerful-card .card-back .member-meta {
+    text-align: left;
+    margin: 0;
+  }
+
+  /* Styling for the name (or any heading inside member-meta) */
+  .powerful-card .card-back .member-meta h2 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
