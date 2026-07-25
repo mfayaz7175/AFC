@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { FiSend, FiMessageCircle, FiClock, FiCopy, FiRefreshCw } from "react-icons/fi";
 import { usePage } from "@inertiajs/react";
@@ -6,8 +7,13 @@ import Header from "./BlurHeader";
 import Footer from "@/Components/News/Footer";
 import { useTranslation } from "react-i18next";
 
-const API_KEY = "AIzaSyDqlZJ7zNj_m0rsaWZUmD50850PjgO-ct8";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+const buildApiMessages = (conversationMessages, systemMessage) => [
+  { role: "system", content: systemMessage },
+  ...conversationMessages.map((message) => ({
+    role: message.sender === "user" ? "user" : "assistant",
+    content: message.text,
+  })),
+];
 
 const ChatBot = () => {
   const { auth } = usePage().props;
@@ -19,9 +25,6 @@ const ChatBot = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [context, setContext] = useState("");
-  const [history, setHistory] = useState([
-    { role: "model", parts: [{ text: t("chatbot.initialMessage") }] }
-  ]);
 
   useEffect(() => {
     fetch("/docs/7th_Semester_Work_Report.txt")
@@ -30,11 +33,9 @@ const ChatBot = () => {
       .catch((err) => console.error("Error loading AFCoin file:", err));
   }, []);
 
-  const getBotResponse = async (userInput) => {
+  const getBotResponse = async (conversationMessages) => {
     setIsTyping(true);
     try {
-      const newHistory = [...history, { role: "user", parts: [{ text: userInput }] }];
-
       const systemMessage = `You are **AFC Chat Bot**, the official assistant for AFCoin. You respond based **only** on the AFCoin content loaded in memory. You are not allowed to use or refer to any external sources.
 
 🌐 **Language Support:**
@@ -134,29 +135,21 @@ Just type your question or keywords, and click on the results to open the page.
 Context (truncated):
 ${context.slice(0, 3000)}`;
 
-      const contents = [
-        { role: "user", parts: [{ text: systemMessage }] },
-        ...newHistory
-      ];
-
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents })
+      const apiMessages = buildApiMessages(conversationMessages, systemMessage);
+      const { data } = await axios.post("/chat/respond", {
+        messages: apiMessages,
       });
 
-      const data = await res.json();
-      if (data.candidates && data.candidates.length > 0) {
-        const reply = data.candidates[0].content.parts[0].text;
-        setHistory([...newHistory, { role: "model", parts: [{ text: reply }] }]);
+      if (data.reply) {
+        const reply = typeof data.reply === "string" ? data.reply : String(data.reply);
         return reply;
-      } else {
-        console.warn("Unexpected response from Gemini:", data);
-        return t("chatbot.error_contact");
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
+
+      console.warn("Unexpected response from chat endpoint:", data);
       return t("chatbot.error_contact");
+    } catch (error) {
+      console.error("Chat request failed:", error);
+      return error?.response?.data?.message || t("chatbot.error_contact");
     } finally {
       setIsTyping(false);
     }
@@ -165,15 +158,16 @@ ${context.slice(0, 3000)}`;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    setMessages(prev => [...prev, { text: input, sender: "user", timestamp: new Date() }]);
+    const userMessage = { text: input, sender: "user", timestamp: new Date() };
+    const nextMessages = [...messages, userMessage];
+    setMessages(nextMessages);
     setInput("");
-    const botText = await getBotResponse(input);
+    const botText = await getBotResponse(nextMessages);
     setMessages(prev => [...prev, { text: botText, sender: "bot", timestamp: new Date() }]);
   };
 
   const handleClear = () => {
     setMessages([{ text: t("chatbot.initialMessage"), sender: "bot", timestamp: new Date() }]);
-    setHistory([{ role: "model", parts: [{ text: t("chatbot.initialMessage") }] }]);
   };
 
   const handleCopy = (text) => {
@@ -183,10 +177,9 @@ ${context.slice(0, 3000)}`;
   const handleRegenerate = async (idx) => {
     const prev = messages[idx - 1];
     if (!prev || prev.sender !== "user") return;
-    setIsTyping(true);
-    const newText = await getBotResponse(prev.text);
+    const conversationMessages = messages.slice(0, idx);
+    const newText = await getBotResponse(conversationMessages);
     setMessages(msgs => msgs.map((m, i) => i === idx ? { ...m, text: newText, timestamp: new Date() } : m));
-    setIsTyping(false);
   };
 
   return (

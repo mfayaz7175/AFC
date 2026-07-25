@@ -55,7 +55,7 @@
 // const tokenAddress = "0x67acdA21c4bEec8EbeD5F51016Ffa7c580cF351C"; // Replace with the token contract address
 // const ownerAddress = "0xbA2E8FD7ef2d3c5C3fF400a1d147b6a9a8D762F8"; // Replace with the owner's address
 // const spenderAddress = "0xC95334fB8256f8c6Eb0d7e0aA497C796ce50498d"; // Replace with the spender's address
-// const providerUrl = "http://127.0.0.1:7545"; // Replace with your Infura or other provider URL (Ganache URL in this case)
+// const providerUrl = "http://127.0.0.1:8545"; // Replace with your Infura or other provider URL (Ganache URL in this case)
 
 // getTotalAllowance(tokenAddress, ownerAddress, spenderAddress, providerUrl);
 
@@ -121,6 +121,6 @@ async function getAllowanceAndTransfers(tokenAddress, ownerAddress, spenderAddre
 const tokenAddress = "0x67acdA21c4bEec8EbeD5F51016Ffa7c580cF351C"; // Replace with your ERC-20 token contract address
 const ownerAddress = "0xbA2E8FD7ef2d3c5C3fF400a1d147b6a9a8D762F8"; // Replace with the owner's address
 const spenderAddress = "0xC95334fB8256f8c6Eb0d7e0aA497C796ce50498d"; // Replace with the spender's address
-const providerUrl = "http://127.0.0.1:7545"; // Replace with your provider URL (Ganache in this case)
+const providerUrl = "http://127.0.0.1:8545"; // Replace with your provider URL (Ganache in this case)
 
 getAllowanceAndTransfers(tokenAddress, ownerAddress, spenderAddress, providerUrl);

@@ -13,7 +13,7 @@ try {
     process.exit(1);
 }
 
-const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:7545"); // Ganache or your provider
+const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545"); // Ganache or your provider
 const contractAddress = "0x58193B612592BD57e009322483dce3D85F72a1cA"; // Replace with the actual contract address
 const privateKey = "b38584743aada61fb5177dd14e581bd098bb2a02276416a0b482efb190e673a6"; // Replace with the actual private key
 

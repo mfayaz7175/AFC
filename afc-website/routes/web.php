@@ -8,6 +8,7 @@ use App\Http\Controllers\ManageRefController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\MintController;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\HelpEntryController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\NotifyController;
@@ -64,6 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/ico/stats', [ICOController::class, 'stats'])->name('ico.stats');
     Route::get('/advance', fn() => Inertia::render('Dashboard/AdvancedFeaturesPage'))->name('advance');
     Route::get('/chat', fn() => Inertia::render('Dashboard/ChatBotPage'))->name('chat');
+    Route::post('/chat/respond', [ChatbotController::class, 'respond'])->name('chat.respond');
     Route::get('/manageRef', [ManageRefController::class, 'index'])->name('manageRef');
     Route::get('/privacyPolicy', fn() => Inertia::render('Dashboard/PrivacyPolicy'))->name('privacyPolicy');
 

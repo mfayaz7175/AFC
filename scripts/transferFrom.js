@@ -50,7 +50,7 @@ const ownerAddress = "0xc4d094157e109872f61632F5CeF160EF8d1B8037"; // Replace wi
 const spenderAddress = "0xC95334fB8256f8c6Eb0d7e0aA497C796ce50498d"; // Replace with the spender's address
 const recipientAddress = "0x381D7Efc5ce56E1273694A80e677b8121654fE58"; // Replace with the recipient's address
 const amount = "1"; // Replace with the amount to transfer (in tokens)
-const providerUrl = "http://127.0.0.1:7545"; // Replace with your provider URL (Ganache in this case)
+const providerUrl = "http://127.0.0.1:8545"; // Replace with your provider URL (Ganache in this case)
 const privateKey = "f630afa853ab3ba96f41aec6f62a8984c3c0542a1b5b1f9d085064c88db71fa4"; // Replace with the private key of the spender
 
 transferFromAccount(tokenAddress, ownerAddress, spenderAddress, recipientAddress, amount, providerUrl, privateKey);

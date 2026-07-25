@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 async function main() {
   // Replace with your MetaMask account address
-  const recipient = "0x58193B612592BD57e009322483dce3D85F72a1cA";
+  const recipient = "0x66b090D8f62eA291bF337e09aE6229ba0784237d";
 
   // Get a signer (Hardhat accounts are pre-funded)
   const [sender] = await ethers.getSigners();

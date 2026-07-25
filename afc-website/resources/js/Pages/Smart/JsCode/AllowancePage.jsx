@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import afcContractABI from "../../../afcContractABI.jsx";
+import contractConfig from '../../../contractConfig';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
@@ -20,7 +21,7 @@ export default function DashboardPage() {
   });
   const [allEvents, setAllEvents] = useState([]);
 
-  const contractAddress = "0x849D90FF07dAfC379e3fdD79C1F50a65636ccEE7";
+  const contractAddress = contractConfig.afCoinAddress;
   const decimals = 18;
 
   useEffect(() => {

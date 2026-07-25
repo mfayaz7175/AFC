@@ -95,7 +95,7 @@ async function main() {
   const privateKey = "fa635a9b64163611ea18d79228752c826b2e3d0bafd2f14826dcd1b7ee70f72b"; // Replace with the private key of 0x38070b37b08901849b777fC9771Cee5997098930
 
   // Set up the provider (Ganache default provider)
-  const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:7545"); // Ganache RPC URL
+  const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545"); // Ganache RPC URL
 
   // Set up the signer
   const signer = new ethers.Wallet(privateKey, provider);
@@ -134,7 +134,7 @@ main().catch((error) => {
 
 // const { ethers } = require("ethers");
 
-// const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:7545"); // Replace with your provider
+// const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545"); // Replace with your provider
 
 // async function getContractAddresses() {
 //   const latestBlock = await provider.getBlockNumber();

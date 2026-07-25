@@ -11,7 +11,7 @@ const tokenABI = [
 const myAddress = "0x77ce269432761f979ac11D42d958551af42a3653";
 
 // Connect to Ethereum network (replace with your RPC URL)
-const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:7545");
+const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
 
 // Create a contract instance
 const tokenContract = new ethers.Contract(tokenAddress, tokenABI, provider);

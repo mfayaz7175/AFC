@@ -9,10 +9,10 @@
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
 <body>
-  <h1>Transfer AFC Token</h1>
+  <h1>AFC Token Transfer (MetaMask)</h1>
 
-  <label for="senderAddress">Sender Address:</label>
-  <input type="text" id="senderAddress" placeholder="Sender Address" required><br><br>
+  <p>Connected: <span id="connectedAccount">Not connected</span></p>
+  <br><br>
 
   <label for="recipientAddress">Recipient Address:</label>
   <input type="text" id="recipientAddress" placeholder="Recipient Address" required><br><br>
@@ -25,23 +25,50 @@
   <p id="transactionStatus"></p>
 
   <script>
-    // Ganache Network Configuration
-    const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545"); // Ganache default RPC URL
-    const contractAddress = "0x0471B72Fe3a1e1350800DAA5AEbbBa319C679b03"; // Your deployed contract address
+    const contractAddress = "0xb518Ff71b149Bcb9831334414D46094dff96bB89";
     const afcContractABI = [
-      // Only including relevant functions
       "function balanceOf(address) view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) public returns (bool)"
+      "function transfer(address recipient, uint256 amount) returns (bool)"
     ];
 
-    // Function to transfer AFC
+    let provider, signer, connectedAccount;
+
+    async function connectWallet() {
+      if (!window.ethereum) {
+        document.getElementById("connectedAccount").textContent = "MetaMask not installed. Please install MetaMask.";
+        return;
+      }
+      try {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        signer = provider.getSigner();
+        connectedAccount = await signer.getAddress();
+        document.getElementById("connectedAccount").textContent = connectedAccount;
+      } catch (e) {
+        document.getElementById("connectedAccount").textContent =
+          e.code === 4001
+            ? "Connection rejected. Please open MetaMask and connect."
+            : "Failed to connect wallet. Please open MetaMask and connect your account.";
+      }
+    }
+
+    window.addEventListener("load", connectWallet);
+
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", () => connectWallet());
+    }
+
     async function transferAFC() {
-      const senderAddress = document.getElementById("senderAddress").value;
+      if (!signer) {
+        alert("Connect MetaMask first!");
+        return;
+      }
+
       const recipientAddress = document.getElementById("recipientAddress").value;
       const amount = document.getElementById("amount").value;
 
-      if (!ethers.utils.isAddress(senderAddress) || !ethers.utils.isAddress(recipientAddress)) {
-        alert("Invalid address format!");
+      if (!ethers.utils.isAddress(recipientAddress)) {
+        alert("Invalid recipient address!");
         return;
       }
 
@@ -50,46 +77,28 @@
         return;
       }
 
-      // Create a contract instance
-      const afcToken = new ethers.Contract(contractAddress, afcContractABI, provider);
-
-      // Fetch the sender's signer (private key should be unlocked in Ganache)
-      const senderSigner = provider.getSigner(senderAddress);
-
-      // Transfer amount in AFC (convert to Wei)
+      const afcToken = new ethers.Contract(contractAddress, afcContractABI, signer);
       const transferAmount = ethers.utils.parseUnits(amount, 18);
 
       try {
-        // Trigger the transaction
-        const tx = await afcToken.connect(senderSigner).transfer(recipientAddress, transferAmount);
-        document.getElementById("transactionStatus").innerHTML = `Transaction hash: ${tx.hash}`;
-
-        // Wait for the transaction to be mined
+        document.getElementById("transactionStatus").innerHTML = "Waiting for confirmation in MetaMask...";
+        const tx = await afcToken.transfer(recipientAddress, transferAmount);
+        document.getElementById("transactionStatus").innerHTML = `Tx sent: ${tx.hash}`;
         await tx.wait();
-        document.getElementById("transactionStatus").innerHTML = `Transaction confirmed! Hash: ${tx.hash}`;
-
-        // Optionally, update the balances after transfer
-        updateBalances(senderAddress, recipientAddress);
-
+        document.getElementById("transactionStatus").innerHTML = `Confirmed! Tx: ${tx.hash}`;
+        updateBalances(connectedAccount, recipientAddress);
       } catch (error) {
-        console.error("Transaction failed:", error);
-        document.getElementById("transactionStatus").innerHTML = "Transaction failed! Check console for details.";
+        console.error(error);
+        document.getElementById("transactionStatus").innerHTML = "Transaction failed!";
       }
     }
 
-    // Function to update sender and recipient balances after the transfer
-    async function updateBalances(senderAddress, recipientAddress) {
+    async function updateBalances(sender, recipient) {
       const afcToken = new ethers.Contract(contractAddress, afcContractABI, provider);
-
-      try {
-        const senderBalance = await afcToken.balanceOf(senderAddress);
-        const recipientBalance = await afcToken.balanceOf(recipientAddress);
-
-        console.log(`Sender balance after transfer: ${ethers.utils.formatUnits(senderBalance, 18)} AFC`);
-        console.log(`Recipient balance after transfer: ${ethers.utils.formatUnits(recipientBalance, 18)} AFC`);
-      } catch (error) {
-        console.error("Error fetching balances:", error);
-      }
+      const sb = await afcToken.balanceOf(sender);
+      const rb = await afcToken.balanceOf(recipient);
+      console.log(`Sender: ${ethers.utils.formatUnits(sb, 18)} AFC`);
+      console.log(`Recipient: ${ethers.utils.formatUnits(rb, 18)} AFC`);
     }
   </script>
 </body>

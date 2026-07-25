@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'openrouter' => [
+        'key' => env('OPENROUTER_API_KEY'),
+        'url' => env('OPENROUTER_URL', 'https://openrouter.ai/api/v1/chat/completions'),
+        'model' => env('OPENROUTER_MODEL', 'google/gemini-2.5-flash'),
+        'site_url' => env('APP_URL', 'http://localhost'),
+        'site_name' => env('APP_NAME', 'AFC Website'),
+    ],
+
 ];

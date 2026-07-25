@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 async function main() {
     // Connect to Ganache
-    const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:7545");
+    const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
 
     // Sender and Receiver Details
     const sender = "0x99caF73B99e932D1223098aA8feaC6A1f84dC6B2"; // Replace with sender address

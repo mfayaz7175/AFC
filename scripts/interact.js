@@ -10,7 +10,7 @@ const tokenABI = [
 ];
 
 // Connect to Ethereum network
-const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:7545");
+const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
 
 // Create a contract instance
 const tokenContract = new ethers.Contract(tokenAddress, tokenABI, provider);

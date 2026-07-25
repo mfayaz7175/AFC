@@ -5,6 +5,7 @@ import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { MintAnimation, WaitAnimation } from '../../../Components/animations/Loading';
 import afcContractABI from '../../../afcContractABI.jsx';
+import contractConfig from '../../../contractConfig';
 import '../CssCode/MintPage.css';
 
 export default function MintPage() {
@@ -62,10 +63,10 @@ export default function MintPage() {
     setMessage('');
 
     try {
-      const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:7545');
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const afcToken = new ethers.Contract(
-        '0x849D90FF07dAfC379e3fdD79C1F50a65636ccEE7',
+        contractConfig.afCoinAddress,
         afcContractABI,
         signer
       );

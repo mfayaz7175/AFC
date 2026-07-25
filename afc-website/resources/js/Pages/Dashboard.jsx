@@ -15,6 +15,7 @@ import Header from '@/Components/News/Header';
 import Footer from '@/Components/News/Footer';
 import { useTranslation } from 'react-i18next';
 import GlobalAdPopup from '@/Components/GlobalAdPopup';
+import contractConfig from '@/contractConfig';
 
 const DashboardMainContent = () => {
   const { t } = useTranslation();
@@ -29,28 +30,72 @@ const DashboardMainContent = () => {
   });
   const [allEvents, setAllEvents] = useState([]);
   const [mintEvents, setMintEvents] = useState([]);
-  const contractAddress = "0x849D90FF07dAfC379e3fdD79C1F50a65636ccEE7";
+  const contractAddress = contractConfig.afCoinAddress;
   const decimals = 18;
+
+  const GANACHE_CHAIN_ID = "0x539"; // 1337 in hex
+
+  async function switchToGanache() {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: GANACHE_CHAIN_ID }],
+      });
+    } catch (e) {
+      if (e.code === 4902) {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [{
+            chainId: GANACHE_CHAIN_ID,
+            chainName: "Ganache Local",
+            rpcUrls: ["http://127.0.0.1:8545"],
+            nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+          }],
+        });
+      }
+    }
+  }
 
   // Connect wallet
   useEffect(() => {
-    // Check if MetaMask (or any ethereum provider) is installed
     if (!window.ethereum) {
-      // Set a message to alert the user
       return setMsg("MetaMask is not installed. Please install MetaMask to connect your wallet.");
     }
 
-    // Request account access if MetaMask is available
-    window.ethereum
-      .request({ method: "eth_requestAccounts" })
-      .then(acc => {
-        if (acc.length > 0) {
-          setAccount(acc[0]);
-        } else {
-          setMsg("MetaMask is installed but no account is connected. Please connect your wallet.");
-        }
-      })
-      .catch(err => setMsg("Failed to connect wallet. Please open MetaMask and connect your account."));
+    switchToGanache().then(() => {
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then(acc => {
+          if (acc.length > 0) {
+            setAccount(acc[0]);
+            setMsg("");
+          } else {
+            setMsg("MetaMask is installed but no account is connected. Please connect your wallet.");
+          }
+        })
+        .catch(err => {
+          if (err.code === 4001) {
+            setMsg("Connection rejected. Please open MetaMask and manually connect your wallet, then refresh.");
+          } else {
+            setMsg("Failed to connect wallet. Please open MetaMask and connect your account.");
+          }
+        });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!window.ethereum) return;
+    const handleAccountsChanged = ([newAccount]) => {
+      if (newAccount) {
+        setAccount(newAccount);
+        setMsg("");
+      } else {
+        setAccount("");
+        setMsg("Wallet disconnected.");
+      }
+    };
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+    return () => window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
   }, []);
 
 
